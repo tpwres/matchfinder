@@ -1,0 +1,27 @@
+base_url = "/"
+
+compile_sass = true
+
+title = "TPW Matchfinder"
+
+theme = "mensch"
+
+[extra]
+mensch_theme = "theme-base-0e"
+
+default_theme = "dark"
+mensch_links = [
+  { url = "//tpwres.pl/e/", name = "Events", icon = "calendar" },
+  { url = "//tpwres.pl/w/", name = "People", icon = "users" },
+  { url = "//tpwres.pl/o/", name = "Orgs", icon = "globe" },
+  { url = "//tpwres.pl/a/", name = "Articles", icon = "book" },
+  { url = "//tpwres.pl/v/", name = "Places", icon = "map-pin" },
+  { url = "//tpwres.pl/c/", name = "Championships", icon = "award" },
+]
+
+footer_links = [
+  { url = "//tpwres.pl/about", name = "About", icon = "info"},
+  { url = "//tpwres.pl/contributing", name = "Contributing", icon = "edit"},
+  { url = "//github.com/tpwres/teczki-polskiego-wrestlingu", name = "GitHub", icon = "github"},
+  { url = "//tpwres.pl/authors", name = "Authors", icon = "heart" }
+]

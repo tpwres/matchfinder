@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+    <style>
+        .name-row button.remove {
+            background-color: var(--dark-red);
+        }
+
+        .name-row:first-child button.remove {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {{ section.content | safe }}
+        <div class="container content"
+             data-controller="namefinder"
+             data-namefinder-orgs-outlet="#orgs"
+             data-appearances="{{ appearances_json_path | default(value='/appearances_v2.json') | safe }}"
+             data-matches="{{ matches_json_path | default(value='/all_matches.json') | safe }}"
+        >
+            <form data-action="namefinder#submit:stop">
+            <div class="name-row">
+                <input type="text" data-namefinder-target="name" data-action="namefinder#lookup"
+                    list="all-names-index">
+                <button type="button" data-action="namefinder#add_more">...and</button>
+                <button type="button" class="remove" data-action="namefinder#del_row">Remove</button>
+            </div>
+            <datalist id="all-names-index" data-namefinder-target="list"></datalist>
+        </form>
+        <ul data-namefinder-target="matches" class="career"></ul>
+        {% include "card_header.html" %}
+        {% include "card_match.html" %}
+    </div>
+    <data id="orgs" data-controller="orgs">
+        {% include "org_badges.html" %}
+</div>
+{% endblock %}
+
