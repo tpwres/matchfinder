@@ -17,8 +17,8 @@
         <div class="container content"
              data-controller="namefinder"
              data-namefinder-orgs-outlet="#orgs"
-             data-appearances="{{ appearances_json_path | default(value='/appearances_v2.json') | safe }}"
-             data-matches="{{ matches_json_path | default(value='/all_matches.json') | safe }}"
+             data-appearances="{{ config.extra.appearances_json_path | default(value='/appearances_v2.json') | safe }}"
+             data-matches="{{ config.extra.matches_json_path | default(value='/all_matches.json') | safe }}"
         >
             <form data-action="namefinder#submit:stop">
             <div class="name-row">
