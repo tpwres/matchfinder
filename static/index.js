@@ -177,10 +177,10 @@ class NameFinderController extends Controller {
 
     format_names(names) {
         // Split names on plus, comma or semicolon, then pass each name to format_name and join with the original symbols
-        const splitNames = names.split(/\s+(\+|,|;)\s+/);
+        const splitNames = names.split(/(\s+(?:\+|,|;)\s+)/);
         return splitNames.map((part) => {
             // Only format the parts that are names, not the delimiters
-            if (part.match(/\s+(\+|,|;)\s+/)) {
+            if (part.match(/(\s+(?:\+|,|;)\s+)/)) {
                 return part;
             } else {
                 return marked.parseInline(part)
