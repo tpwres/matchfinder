@@ -13,28 +13,26 @@
 {% endblock %}
 
 {% block content %}
+    {% set appearances_path = config.extra.appearances_json_path | default(value='/appearances_v2.json') %}
+    {% set matches_path = config.extra.matches_json_path | default(value='/all_matches.json') %}
     {{ section.content | safe }}
-        <div class="container content"
-             data-controller="namefinder"
-             data-namefinder-orgs-outlet="#orgs"
-             data-appearances="{{ config.extra.appearances_json_path | default(value='/appearances_v2.json') | safe }}"
-             data-matches="{{ config.extra.matches_json_path | default(value='/all_matches.json') | safe }}"
-        >
-            <form data-action="namefinder#submit:stop">
+    <div id="namefinder" class="container content"
+         data-appearances="{{ appearances_path | safe }}"
+         data-matches="{{ matches_path | safe }}">
+        <form>
             <div class="name-row">
-                <input type="text" data-namefinder-target="name" data-action="namefinder#lookup"
-                    list="all-names-index">
-                <button type="button" data-action="namefinder#add_more">...and</button>
-                <button type="button" class="remove" data-action="namefinder#del_row">Remove</button>
+                <input type="text" list="all-names-index"/>
+                <button type="button" class="add-name">...and</button>
+                <button type="button" class="remove">Remove</button>
             </div>
-            <datalist id="all-names-index" data-namefinder-target="list"></datalist>
+            <datalist id="all-names-index"></datalist>
         </form>
-        <ul data-namefinder-target="matches" class="career"></ul>
+        <ul id="matches" class="career"></ul>
         {% include "card_header.html" %}
         {% include "card_match.html" %}
     </div>
-    <data id="orgs" data-controller="orgs">
+    <data id="orgs">
         {% include "org_badges.html" %}
-</div>
+    </data>
 {% endblock %}
 
