@@ -1,16 +1,30 @@
-import { Application, Controller } from './stimulus.js'
 import './marked.min.js'
 
-class NameFinderController extends Controller {
-    static targets = ["name", "list", "matches", "headerTemplate", "matchTemplate"]
-    static outlets = ["orgs"]
-
+class NameFinderController {
+    constructor(root, orgs_controller) {
+        this.element = root
+        this.nameTarget = root.querySelector('input[type=text]')
+        this.listTarget = root.querySelector('datalist')
+        this.matchesTarget = root.querySelector('ul#matches')
+        this.headerTemplateTarget = root.querySelector('template#card-header')
+        this.matchTemplateTarget = root.querySelector('template#card-match')
+        this.orgs = orgs_controller
+        this.connect()
+    }
     connect() {
         this.populate_completion_list()
         this.load_matches()
         this.nameTarget.value = ''
         this.nameTarget.attributes.tabIndex = '1'
+        const form = this.element.querySelector('form')
+        form.addEventListener('submit', (event) => event.preventDefault())
+        form.addEventListener('click', this.handle_buttons.bind(this))
+        this.add_input_handler(this.nameTarget)
         marked.use({ hooks: { postprocess: this.postprocess_html.bind(this) } })
+    }
+
+    add_input_handler(element) {
+        element.addEventListener('input', this.lookup.bind(this))
     }
 
     add_more() {
@@ -18,12 +32,21 @@ class NameFinderController extends Controller {
         const clone = row.cloneNode(true)
         clone.querySelector('input[type=text]').value = ''
         row.parentNode.insertAdjacentElement("beforeend", clone)
+        this.add_input_handler(clone)
     }
 
     del_row(event) {
         const row = event.target.closest(".name-row")
         row.parentNode.removeChild(row)
         this.lookup()
+    }
+
+    handle_buttons(event) {
+        if (event.target.tagName != 'BUTTON') return
+        if (event.target.className == 'add-name')
+            this.add_more()
+        else if (event.target.className == 'remove')
+            this.del_row(event)
     }
 
     async load_matches() {
@@ -48,8 +71,13 @@ class NameFinderController extends Controller {
             .catch(error => console.error('Error:', error))
     }
 
+    all_names() {
+        const inputs = this.element.querySelectorAll('input[type=text]')
+        return Array.prototype.map.call(inputs, (el) => el.value)
+    }
+
     lookup() {
-        const names = this.nameTargets.map((el) => el.value)
+        const names = this.all_names()
         const first = names.shift()
         const matches = this.appearances[first]
         if (!matches) {
@@ -116,7 +144,7 @@ class NameFinderController extends Controller {
 
             const o = t.querySelector('.o')
             for (const org of match['o']) {
-                o.appendChild(this.orgsOutlet.get_badge(org))
+                o.appendChild(this.orgs.get_badge(org))
             }
 
             const r = t.querySelector('.r')
@@ -191,7 +219,10 @@ class NameFinderController extends Controller {
     }
 }
 
-class OrgsController extends Controller {
+class OrgsController {
+    constructor(root) {
+        this.element = root
+    }
     get_badge(org) {
         const id = `#org-badge-${org}`
         const el = this.element.querySelector(id)
@@ -209,6 +240,7 @@ class OrgsController extends Controller {
     }
 }
 
-window.app = Application.start()
-app.register("namefinder", NameFinderController)
-app.register("orgs", OrgsController)
+const orgs_data = document.querySelector('data#orgs')
+let orgs = new OrgsController(orgs_data)
+const root = document.querySelector('#namefinder')
+new NameFinderController(root, orgs)
