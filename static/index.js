@@ -108,7 +108,6 @@ class NameFinderController extends Controller {
         matches.sort((a, b) => new Date(b.d) - new Date(a.d))
 
         for (const match of matches) {
-            console.log(match)
             const t = match_template.cloneNode(true)
 
             const d = t.querySelector('.d')
@@ -130,7 +129,6 @@ class NameFinderController extends Controller {
     format_details(match) {
         let event_name = match.n
         let participants = match.m
-        console.log("Participants before", participants)
         const { length, [length - 1]: last } = participants
         let options
 
@@ -140,11 +138,10 @@ class NameFinderController extends Controller {
         } else
             options = {}
 
-        console.log("Participants after", participants)
         let head = ''
         let participant_sep = ' and '
-        let sep = match.nc ? ' vs ' : ' defeated '
-        let end = match.nc ? ` - ${match.nc}` : match.r ? ` via ${match.r}` : ''
+        let sep = options.nc ? ' vs ' : ' defeated '
+        let end = options.nc ? ` - ${options.nc}` : options.r ? ` via ${options.r}` : ''
         if (end == '' && new Date(match.d) > new Date()) {
             end = ' - upcoming'
             sep = ' vs '
