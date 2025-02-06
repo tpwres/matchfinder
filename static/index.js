@@ -35,7 +35,8 @@ class NameFinderController {
     }
 
     ac_query(text) {
-        return this.name_list.filter(name => name.includes(text))
+        const lc = text.toLowerCase()
+        return this.name_list.filter(name => name.toLowerCase().includes(lc))
     }
 
     add_more() {
