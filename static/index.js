@@ -1,10 +1,10 @@
 import './marked.min.js'
+import autocomp from './autocomp.js'
 
 class NameFinderController {
     constructor(root, orgs_controller) {
         this.element = root
         this.nameTarget = root.querySelector('input[type=text]')
-        this.listTarget = root.querySelector('datalist')
         this.matchesTarget = root.querySelector('ul#matches')
         this.headerTemplateTarget = root.querySelector('template#card-header')
         this.matchTemplateTarget = root.querySelector('template#card-match')
@@ -19,20 +19,32 @@ class NameFinderController {
         const form = this.element.querySelector('form')
         form.addEventListener('submit', (event) => event.preventDefault())
         form.addEventListener('click', this.handle_buttons.bind(this))
-        this.add_input_handler(this.nameTarget)
+        this.add_input_handlers(this.nameTarget)
         marked.use({ hooks: { postprocess: this.postprocess_html.bind(this) } })
     }
 
-    add_input_handler(element) {
-        element.addEventListener('input', this.lookup.bind(this))
+    add_input_handlers(element) {
+        autocomp(element, {
+            onQuery: this.ac_query.bind(this),
+            onSelect: (text) => {
+                element.value = text
+                this.lookup()
+                return text
+            }
+        })
+    }
+
+    ac_query(text) {
+        return this.name_list.filter(name => name.includes(text))
     }
 
     add_more() {
         const row = this.element.querySelector(".name-row:first-child")
         const clone = row.cloneNode(true)
-        clone.querySelector('input[type=text]').value = ''
+        const input = clone.querySelector('input[type=text]')
+        input.value = ''
         row.parentNode.insertAdjacentElement("beforeend", clone)
-        this.add_input_handler(clone)
+        this.add_input_handlers(input)
     }
 
     del_row(event) {
@@ -65,8 +77,7 @@ class NameFinderController {
             .then(response => response.json())
             .then(data => {
                 this.appearances = data
-                const names = Object.keys(data)
-                names.forEach((val) => { this.listTarget.innerHTML += `<option value="${val}"></option>` })
+                this.name_list = Object.keys(data)
             })
             .catch(error => console.error('Error:', error))
     }

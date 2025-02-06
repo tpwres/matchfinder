@@ -61,12 +61,10 @@
             </p>
             <form data-action="namefinder#submit:stop">
                 <div class="name-row">
-                    <input type="text" data-namefinder-target="name" data-action="namefinder#lookup"
-                        list="all-names-index">
+                    <input type="text" data-namefinder-target="name" data-action="namefinder#lookup">
                     <button type="button" data-action="namefinder#add_more">...and</button>
                     <button type="button" class="remove" data-action="namefinder#del_row">Remove</button>
                 </div>
-                <datalist id="all-names-index" data-namefinder-target="list"></datalist>
             </form>
             <ul data-namefinder-target="matches" class="career"></ul>
             <template id="card-header" data-namefinder-target="headerTemplate">
