@@ -25,6 +25,7 @@ footer_links = [
   { url = "//tpwres.pl/about", name = "About", icon = "info"},
   { url = "//tpwres.pl/contributing", name = "Contributing", icon = "file-pen-line"},
   { url = "//github.com/tpwres/teczki-polskiego-wrestlingu", name = "GitHub", icon = "github"},
+  { url = "/atom.xml", name = "Atom Feed", icon = "rss"},
   { url = "//tpwres.pl/authors", name = "Authors", icon = "heart" }
 ]
 
