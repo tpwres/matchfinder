@@ -1,5 +1,5 @@
 
-base_url = "${BASE_URL}"
+base_url = "/"
 
 compile_sass = true
 
