@@ -1,0 +1,144 @@
+nav
+  font-size: 1rem
+  padding: 1rem 0
+  line-height: 1
+
+nav a,
+nav a:visited
+  margin: 0 1rem 0 0
+  border: 1px solid var(--border)
+  border-radius: 5px
+  color: var(--text)
+  display: inline-block
+  padding: 0.1rem 1rem
+  text-decoration: none
+
+// Reduce nav side on mobile
+@media only screen and (max-width: 750px)
+  nav a
+    border: none
+    padding: 0
+    color: var(--accent)
+    text-decoration: underline
+    line-height: 1
+
+nav a:hover
+  color: var(--accent)
+  border-color: var(--accent)
+
+nav.toplevel
+  border-bottom: .2rem solid var(--dark-blue)
+
+nav.menu
+  padding: 0
+
+nav.level2
+  padding: 0
+
+  a
+    border: none
+    margin: 0
+    padding: 0
+    color: var(--text)
+
+  .nav-right
+    display: block
+
+    ul.nav-right-list
+      margin: 0
+      padding: 0
+      list-style-type: none
+      display: flex
+      justify-content: space-evenly
+      @media only screen and (max-width: 720px)
+          flex-wrap: wrap
+          justify-content: flex-start
+
+      li
+        padding: 0.15rem
+        white-space: nowrap
+        @media only screen and (max-width: 720px)
+          flex-basis: 29vw
+
+        @media only screen and (max-width: 540px)
+          flex-basis: 40vw
+
+
+
+nav.menu
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 0 0.25rem
+
+  a
+    border: none
+    margin: 0
+    padding: 0
+    text-decoration: none
+    color: var(--fg)
+    &:hover
+      text-decoration: underline
+      color: var(--dark-aqua)
+
+  .sitename:hover
+    color: var(--dark-aqua)
+    text-decoration: underline
+
+  .nav-left
+    ul.nav-left-list
+      display: flex
+      align-items: center
+      gap: 0 0.25em
+      margin: 0
+      padding: 0
+      list-style-type: none
+      li
+        display: inline-block
+
+  .nav-right
+    display: flex
+    gap: 0 0.25rem
+
+    ul.nav-right-list
+      margin: 0
+      padding-left: 0
+      list-style-type: none
+      display: flex
+      align-items: center
+      gap: 0.25rem
+
+      li
+        text-align: center
+        flex-grow: 0
+
+      li.grow
+        flex-grow: 1
+
+.logo
+  display: inline-block
+  height: 48px
+  width: 48px
+  background: var(--logo-url)
+  background-size: contain
+  vertical-align: text-bottom
+
+  @media only screen and (max-width: 360px)
+    display: none
+
+.sitename
+  position: relative
+  font-size: 1.8em
+  font-weight: bold
+  color: var(--text-light)
+
+  @media only screen and (max-width: 360px)
+    display: inline
+
+footer
+  border-top: .2rem solid var(--dark-blue)
+
+  .links
+    display: flex
+    justify-content: center
+    gap: 0.5rem
