@@ -20,6 +20,16 @@ class NameFinderController {
         this.add_input_handlers(this.nameTarget)
         marked.use({ hooks: { postprocess: this.postprocess_html.bind(this) } })
         Promise.all([this.populate_completion_list(), this.load_matches()])
+            .then(this.ready.bind(this))
+    }
+
+    ready() {
+        const search = new URLSearchParams(document.location.search)
+        const name = search.get('q')
+        if (!name) return
+        this.nameTarget.value = name
+        // Invoke lookup immediately and directly, skipping autocomp
+        this.lookup()
     }
 
     add_input_handlers(element) {
