@@ -206,7 +206,7 @@ class NameFinderController {
         }
 
         const winner = participants.shift()
-        const matchtype = options.s || 'Singles Match'
+        const matchtype = options.g ? '' : (options.s || 'Singles Match')
         const title = options.c || ''
 
         let text = head
@@ -219,7 +219,13 @@ class NameFinderController {
 
         if (title)
             text += `<strong>${marked.parseInline(title)}</strong> `
-        text += `<strong>${marked.parseInline(matchtype)}</strong> at `
+        if (matchtype)
+            text += `<strong>${marked.parseInline(matchtype)}</strong> at `
+        else if (options.g || options.s) {
+            text += (options.g || options.s)
+            text += '<br/>'
+        } else
+            text += 'At '
         text += this.format_link(event_name, match.p)
 
         return text
