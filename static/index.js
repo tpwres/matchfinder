@@ -12,8 +12,6 @@ class NameFinderController {
         this.connect()
     }
     connect() {
-        this.populate_completion_list()
-        this.load_matches()
         this.nameTarget.value = ''
         this.nameTarget.attributes.tabIndex = '1'
         const form = this.element.querySelector('form')
@@ -21,6 +19,7 @@ class NameFinderController {
         form.addEventListener('click', this.handle_buttons.bind(this))
         this.add_input_handlers(this.nameTarget)
         marked.use({ hooks: { postprocess: this.postprocess_html.bind(this) } })
+        Promise.all([this.populate_completion_list(), this.load_matches()])
     }
 
     add_input_handlers(element) {
@@ -64,7 +63,7 @@ class NameFinderController {
 
     async load_matches() {
         const path = this.element.dataset.matches
-        fetch(path)
+        return fetch(path)
             .then(response => response.json())
             .then(data => {
                 this.all_matches = data
@@ -74,7 +73,7 @@ class NameFinderController {
 
     async populate_completion_list() {
         const path = this.element.dataset.appearances
-        fetch(path)
+        return fetch(path)
             .then(response => response.json())
             .then(data => {
                 this.appearances = data
