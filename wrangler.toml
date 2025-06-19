@@ -1,5 +1,6 @@
 name = 'matchfinder'
-compatibility_date = '2025-04-01'
+compatibility_date = '2025-06-18'
+preview_urls = true
 
 [assets]
 directory = './public'
