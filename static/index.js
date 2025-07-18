@@ -87,13 +87,13 @@ class NameFinderController {
             .then(response => response.json())
             .then(data => {
                 this.appearances = data
-                this.name_list = this.discard_teams(Object.keys(data))
+                this.name_list = this.discard_non_talent(Object.keys(data))
             })
             .catch(error => console.error('Error:', error))
     }
 
-    discard_teams(names) {
-        return names.filter(el => el.indexOf('&') == -1)
+    discard_non_talent(names) {
+        return names.filter(el => el.indexOf('&') == -1 && el.indexOf('@') == -1)
     }
 
     all_names() {
