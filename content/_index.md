@@ -4,6 +4,6 @@ template = "matchfinder.html"
 +++
 
 
-Find all matches by entering one or more wrestlers that took part.
+Find all matches by entering one or more wrestlers  or teams/stables that took part.
 Enter one name in the text field, click the button to add more names in additional fields.
-Currently, only **exact** names are searched for, not any aliases the character may have used.
+No extra alias matching is done for people who used different names.
