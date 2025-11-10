@@ -221,8 +221,10 @@ class NameFinderController {
             text += `<strong>${marked.parseInline(title)}</strong> `
         if (matchtype)
             text += `<strong>${marked.parseInline(matchtype)}</strong> at `
+        else if (options.g && typeof(options.g) == "boolean" && !options.s)
+            ; // do nothing, no segment description
         else if (options.g || options.s) {
-            text += (options.g || options.s)
+            text += marked.parseInline(options.g || options.s)
             text += '<br/>'
         } else
             text += 'At '
